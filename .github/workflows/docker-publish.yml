@@ -10,13 +10,13 @@ on:
   schedule:
     - cron: '0 17 */10 * *'
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths-ignore:
       - '**/README.md'
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
     paths-ignore:
       - '**/README.md'
 
