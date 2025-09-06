@@ -1,0 +1,18 @@
+services:
+    dnsproxy:
+        build: .
+        container_name: dnsproxy
+        environment:
+            - 'ALLOWED_CLIENTS_FILE=/tmp/myacls.acl'
+#            - 'ALLOWED_CLIENTS=0.0.0.0/0' # CHANGE THIS
+            - 'DNSDIST_ENABLE_WEBSERVER=true'
+            - 'DNSDIST_WEBSERVER_NETWORKS_ACL=example.com OR 127.0.0.1' # CHANGE THIS
+        ports:
+            - '443:8443'
+            - '80:8080'
+            - '81:8083' # only for webserver
+            - '53:5300/udp'
+            - '53:5300/tcp'
+        volumes:
+            - './myacls.acl:/tmp/myacls.acl:ro'
+        restart: unless-stopped
