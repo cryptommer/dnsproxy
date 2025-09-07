@@ -43,7 +43,7 @@ RUN echo "I'm building for $TARGETPLATFORM"
 RUN apk update && apk upgrade
 
 # Create Users
-RUN addgroup snidust && adduser -D -H -G snidust snidust
+RUN addgroup dnsproxy && adduser -D -H -G dnsproxy dnsproxy
 
 # Install needed packages and clean up
 RUN apk add --no-cache jq tini dnsdist curl bash gnupg procps ca-certificates openssl dog lua5.4-filesystem ipcalc libcap nginx nginx-mod-stream supercronic step-cli && \
@@ -53,26 +53,26 @@ RUN apk add --no-cache jq tini dnsdist curl bash gnupg procps ca-certificates op
 # Setup Folder(s)
 RUN mkdir -p /etc/dnsdist/conf.d && \
     mkdir -p /etc/dnsdist/certs && \
-    mkdir -p /etc/snidust/domains.d && \
-    mkdir -p /etc/sniproxy/ && \
-    mkdir -p /var/lib/snidust/domains.d
+    mkdir -p /etc/dnsproxy/domains.d && \
+    mkdir -p /etc/dnsproxy/ && \
+    mkdir -p /var/lib/dnsproxy/domains.d
 
 # Copy Files
 COPY configs/dnsdist/dnsdist.conf.template /etc/dnsdist/dnsdist.conf.template
 COPY configs/dnsdist/conf.d/00-SniDust.conf /etc/dnsdist/conf.d/00-SniDust.conf
 COPY configs/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY domains.d /var/lib/snidust/domains.d
+COPY domains.d /var/lib/dnsproxy/domains.d
 
 COPY entrypoint.sh /entrypoint.sh
 COPY generateACL.sh /generateACL.sh
 COPY dynDNSCron.sh /dynDNSCron.sh
 
-RUN chown -R snidust:snidust /etc/dnsdist/ && \
-    chown -R snidust:snidust /etc/snidust/ && \
-    chown -R snidust:snidust /etc/nginx/ && \
-    chown -R snidust:snidust /var/log/nginx/ && \
-    chown -R snidust:snidust /var/lib/nginx/ && \
-    chown -R snidust:snidust /run/nginx/ && \
+RUN chown -R dnsproxy:dnsproxy /etc/dnsdist/ && \
+    chown -R dnsproxy:dnsproxy /etc/dnsproxy/ && \
+    chown -R dnsproxy:dnsproxy /etc/nginx/ && \
+    chown -R dnsproxy:dnsproxy /var/log/nginx/ && \
+    chown -R dnsproxy:dnsproxy /var/lib/nginx/ && \
+    chown -R dnsproxy:dnsproxy /run/nginx/ && \
     chmod +x /entrypoint.sh && \
     chmod +x /generateACL.sh && \
     chmod +x dynDNSCron.sh
