@@ -68,7 +68,7 @@ services:
             - 443:8443
             - 80:8080
             - 53:5300/udp
-        image: 'ghcr.io/cryptommer/dnsproxy:1.0.15'
+        image: 'ghcr.io/cryptommer/dnsproxy:latest'
 ```
 
 ### Check logs of the container
@@ -175,8 +175,8 @@ services:
             - '80:8080'
             - '53:5300/udp'
         volumes:
-            - '~/99-custom.lst:/etc/snidust/domains.d/99-custom.lst:ro'
-        image: 'ghcr.io/cryptommer/dnsproxy:1.0.15'
+            - '~/99-custom.lst:/etc/dnsproxy/domains.d/99-custom.lst:ro'
+        image: 'ghcr.io/cryptommer/dnsproxy:latest'
 ```
 
 ### Spoof all domains
@@ -214,7 +214,7 @@ services:
             - '53:5300/udp'
         volumes:
             - '~/myacls.acl:/tmp/myacls.acl:ro'
-        image: 'ghcr.io/cryptommer/dnsproxy:1.0.15'
+        image: 'ghcr.io/cryptommer/dnsproxy:latest'
 ```
 myacls.acl example:
 ```text
