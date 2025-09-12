@@ -54,7 +54,7 @@ RUN apk add --no-cache jq tini dnsdist curl bash gnupg procps ca-certificates op
 RUN mkdir -p /etc/dnsdist/conf.d && \
     mkdir -p /etc/dnsdist/certs && \
     mkdir -p /etc/dnsproxy/domains.d && \
-    mkdir -p /etc/dnsproxy/ && \
+    mkdir -p /var/log/dnsdist && \
     mkdir -p /var/lib/dnsproxy/domains.d
 
 # Copy Files
@@ -71,10 +71,13 @@ RUN chown -R dnsproxy:dnsproxy /etc/dnsdist/ && \
     chown -R dnsproxy:dnsproxy /etc/dnsproxy/ && \
     chown -R dnsproxy:dnsproxy /etc/nginx/ && \
     chown -R dnsproxy:dnsproxy /var/log/nginx/ && \
+    chown -R dnsproxy:dnsproxy /var/log/dnsdist/ && \
     chown -R dnsproxy:dnsproxy /var/lib/nginx/ && \
     chown -R dnsproxy:dnsproxy /run/nginx/ && \
     chmod +x /entrypoint.sh && \
     chmod +x /generateACL.sh && \
+    chown dnsdist:dnsdist /var/log/snidust/ && \
+    chmod 755 /var/log/snidust/ && \
     chmod +x dynDNSCron.sh
 
 USER dnsproxy
