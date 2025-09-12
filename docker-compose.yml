@@ -15,4 +15,5 @@ services:
             - '53:5300/tcp'
         volumes:
             - './myacls.acl:/tmp/myacls.acl:ro'
+            - './logs:/var/log/dnsdist:rw'
         restart: unless-stopped

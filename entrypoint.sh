@@ -10,7 +10,7 @@ if [ "${DNSDIST_ENABLE_DOT}" == "true" ]; then
 
   if [[ " ${VALID_CERT_TYPE_VALUES[*]} " =~ " ${DNSDIST_DOT_CERT_TYPE} " ]]; then
     if [ "${DNSDIST_DOT_CERT_TYPE}" == "auto-self" ]; then
-      /usr/bin/step certificate create dot.snidust.local /etc/dnsdist/certs/tls.pem /etc/dnsdist/certs/tls.key --profile self-signed --subtle --no-password --insecure
+      /usr/bin/step certificate create dot.dnsproxy.local /etc/dnsdist/certs/tls.pem /etc/dnsdist/certs/tls.key --profile self-signed --subtle --no-password --insecure
     fi
   else
     echo "[ERROR] Invalid value for DNSDIST_DOT_CERT_TYPE: $DNSDIST_DOT_CERT_TYPE"
@@ -44,7 +44,7 @@ fi
 if [ "$INSTALL_DEFAULT_DOMAINS" = true ];
 then
   echo "[INFO] Installing default domains..."
-  cp -v /var/lib/snidust/domains.d/*.lst /etc/snidust/domains.d/
+  cp -v /var/lib/dnsproxy/domains.d/*.lst /etc/dnsproxy/domains.d/
 fi
 
 echo "[INFO] Generating ACL..."
@@ -59,12 +59,12 @@ echo "[INFO] Generating DNSDist Config..."
 if [ "$DYNDNS_CRON_ENABLED" = true ];
 then
   echo "[INFO] DynDNS Address in ALLOWED_CLIENTS detected => Enable cron job"
-  echo "$DYNDNS_CRON_SCHEDULE /bin/bash /dynDNSCron.sh" > /etc/snidust/dyndns.cron
-  supercronic /etc/snidust/dyndns.cron &
+  echo "$DYNDNS_CRON_SCHEDULE /bin/bash /dynDNSCron.sh" > /etc/dnsproxy/dyndns.cron
+  supercronic /etc/dnsproxy/dyndns.cron &
 fi
 
 echo "[INFO] Starting DNSDist..."
-/usr/bin/dnsdist -C /etc/dnsdist/dnsdist.conf --supervised --disable-syslog --uid snidust --gid snidust &
+/usr/bin/dnsdist -C /etc/dnsdist/dnsdist.conf --supervised --disable-syslog --uid dnsproxy --gid dnsproxy &
 
 
 echo "[INFO] Starting nginx.."
@@ -74,6 +74,6 @@ nginx_processId=$!
 sleep 200
 
 echo "==================================================================="
-echo "[INFO] SniDust started => Using $EXTERNAL_IP - Point your DNS settings to this address"
+echo "[INFO] dnsproxy started => Using $EXTERNAL_IP - Point your DNS settings to this address"
 echo "==================================================================="
 wait $nginx_processId
