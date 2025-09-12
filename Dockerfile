@@ -77,7 +77,7 @@ RUN chown -R dnsproxy:dnsproxy /etc/dnsdist/ && \
     chmod +x /generateACL.sh && \
     chmod +x dynDNSCron.sh
 
-USER snidust
+USER dnsproxy
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash", "/entrypoint.sh"]

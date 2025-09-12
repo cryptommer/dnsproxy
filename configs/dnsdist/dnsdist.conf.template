@@ -94,5 +94,11 @@ else
 echo ""
 fi
 
+
+
+echo "-- Apply to all queries"
+echo "addAction(AllRule(), LuaAction(detailedLogRequest))"
+echo ""
+
 echo "-- Default -> send to Upstream Pool"
 echo "addAction(AllRule(),PoolAction(\"${DNSDIST_UPSTREAM_POOL_NAME}\"))"
