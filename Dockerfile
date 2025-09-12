@@ -76,8 +76,7 @@ RUN chown -R dnsproxy:dnsproxy /etc/dnsdist/ && \
     chown -R dnsproxy:dnsproxy /run/nginx/ && \
     chmod +x /entrypoint.sh && \
     chmod +x /generateACL.sh && \
-    chown dnsdist:dnsdist /var/log/snidust/ && \
-    chmod 755 /var/log/snidust/ && \
+    chmod 755 /var/log/dnsdist/ && \
     chmod +x dynDNSCron.sh
 
 USER dnsproxy
